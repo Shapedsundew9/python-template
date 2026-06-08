@@ -2,7 +2,7 @@
 	"name": "Python-Base",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspace",
+	"workspaceFolder": "/workspace/python-base",
 	"customizations": {
 		"vscode": {
 			"extensions": [
