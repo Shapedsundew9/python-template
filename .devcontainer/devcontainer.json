@@ -58,7 +58,10 @@
 	},
 	// 1. Ensure Node.js is available (Copilot CLI requires it)
 	"features": {
-		"ghcr.io/devcontainers/features/node:1": {}
+		"ghcr.io/devcontainers/features/node:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "latest"
+        }
 	},
 	"postCreateCommand": "bash .devcontainer/post-create.sh",
 	"postStartCommand": "bash .devcontainer/post-start.sh",
