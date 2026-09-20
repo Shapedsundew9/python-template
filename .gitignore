@@ -140,6 +140,7 @@ celerybeat.pid
 .venv
 env/
 venv/
+.venv/
 
 # Trussflow run artifacts (raw agent input/output)
 artifacts/
