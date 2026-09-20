@@ -4,25 +4,23 @@
 # The 'set -e' command ensures that the script will exit immediately if a command fails.
 set -e
 
-echo "--- Running post-create script ---"
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt install -y ripgrep vim
-
 # Activating the virtual environment
 echo "Creating virtual environment..."
 if [ ! -d ".venv" ]; then
     python3 -m venv .venv
+else
+    python3 -m venv --upgrade-deps .venv
+    .venv/bin/pip install --upgrade pip
 fi
-.venv/bin/pip install --upgrade pip
 
-# Install Python dependencies from requirements.txt
-echo "Installing requirements..."
-find . -name "requirements.txt" -exec ./.venv/bin/pip install -r {} \;
+if [[ -f requirements.txt ]]; then
+    .venv/bin/python -m pip install -r requirements.txt
+fi
 
-# Install anti-gravity
-curl -fsSL https://antigravity.google/cli/install.sh | bash
+if [[ -f pyproject.toml ]]; then
+    .venv/bin/python -m pip install --editable .
+fi
 
-echo "Installing project in editable mode..."
-./.venv/bin/pip install -e .
-
+if ! command -v agy >/dev/null 2>&1 && ! command -v antigravity >/dev/null 2>&1; then
+    curl --proto '=https' --tlsv1.2 -fsSL https://antigravity.google/cli/install.sh | bash
+fi

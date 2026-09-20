@@ -1,8 +1,38 @@
 {
-	"name": "Python-Base",
+	"name": "Python Template",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspace/python-base",
+	// Add "neo4j" and/or "postgres" for experiments that need them.
+	"runServices": [
+		"app"
+	],
+	"workspaceFolder": "/workspace",
+	"remoteEnv": {
+		"GITHUB_TOKEN": "${localEnv:COPILOT_GITHUB_TOKEN}",
+		"GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}",
+		"ARC_AGI_API": "${localEnv:ARC_AGI_API}",
+		"DATABASE_URL": "${localEnv:DATABASE_URL}",
+		"NEO4J_URI": "${localEnv:NEO4J_URI}",
+		"NEO4J_USERNAME": "${localEnv:NEO4J_USERNAME}",
+		"NEO4J_PASSWORD": "${localEnv:NEO4J_PASSWORD}",
+		"NEO4J_DATABASE": "${localEnv:NEO4J_DATABASE}",
+		"HF_READ_TOKEN": "${localEnv:HF_READ_TOKEN}"
+	},
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	"remoteUser": "vscode",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"version": "latest",
+			"moby": false
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/node:2": {
+			"version": "latest"
+		}
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -14,9 +44,9 @@
 				"DavidAnson.vscode-markdownlint",
 				"ms-python.pylint",
 				"GitHub.vscode-pull-request-github",
-				"ms-ossdata.vscode-pgsql",
 				"ms-vscode.vscode-speech",
-				"github.vscode-github-actions"
+				"github.vscode-github-actions",
+				"MermaidChart.vscode-mermaid-chart"
 			],
 			"settings": {
 				"python.formatting.provider": "black",
@@ -55,19 +85,5 @@
 				}
 			}
 		}
-	},
-	// 1. Ensure Node.js is available (Copilot CLI requires it)
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {},
-        "ghcr.io/devcontainers/features/github-cli:1": {
-            "version": "latest"
-        }
-	},
-	"postCreateCommand": "bash .devcontainer/post-create.sh",
-	"postStartCommand": "bash .devcontainer/post-start.sh",
-	"containerEnv": {
-		"GITHUB_TOKEN": "${localEnv:COPILOT_GITHUB_TOKEN}",
-		// "GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}",
-		"GEMINI_API_KEY": "${localEnv:FREE_GEMINI_API_KEY}"
 	}
 }
