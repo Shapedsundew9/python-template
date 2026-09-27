@@ -1,5 +1,7 @@
 # Project Guidelines
 
+Read `.shared/ai/core/service-instructions.md`.
+
 ## Repository Layout
 
 - This is a Python-only package repository.
@@ -35,18 +37,8 @@
 - Add every new dependency to the appropriate section of `pyproject.toml` and install it in `.venv` before validating.
 - Avoid introducing a dependency for functionality that is small and clear to implement with the standard library.
 
-## Services Available
-
-- Postgres `$DATABASE_URL`
-- Neo4j `$NEO4J_URI`, `$NEO4J_USER`, `$NEO4J_PASSWORD`
-- Pypi `$PYPI_USERNAME`, `$PYPI_PASSWORD`
-- GitHub `$GITHUB_TOKEN`
-- Arc AGI `$ARC_AGI_API`
-- Hugging Face `$HF_READ_TOKEN`
-- Emergent Mind `$EMERGENT_MIND_BASE_URL`, `$EMERGENT_MIND_OPENAPI_SPEC_URL`, `$EMERGENT_MIND_TOKEN`
-
 ## Documentation
 
 - Keep `README.md` aligned with the install, usage, development, and publishing workflows.
-- Always run `npx markdownlint-cli2 --fix "**/*.md"` after markdown changes but do not address issues that cannot be fixed without explicit permission.
+- Always run `npx markdownlint-cli2 --fix [filename].md` for markdown changes but do not address issues that are not fixable with this command without explicit permission.
 - Never modify `.markdownlint-cli2.jsonc`. Ask the user first if a change is necessary.
