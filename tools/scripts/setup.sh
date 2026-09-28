@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Configuration
+# Configuration (keep in sync with configure-subtree.sh)
 REMOTE_NAME="shared-dev"
 REMOTE_URL="git@github.com:shapedsundew9/shared-dev.git"
 PREFIX=".shared"
@@ -28,6 +28,10 @@ else
     git remote add -f "$REMOTE_NAME" "$REMOTE_URL"
 fi
 
+# Repo-local shortcuts: `git shared-pull` and `git shared-push`
+git config alias.shared-pull "subtree pull --prefix=$PREFIX $REMOTE_NAME $BRANCH --squash"
+git config alias.shared-push "subtree push --prefix=$PREFIX $REMOTE_NAME $BRANCH"
+
 # 4. Check if directory or tree already exists
 if [ -d "$PREFIX" ] || git ls-tree -d HEAD "$PREFIX" 2>/dev/null | grep -q "$PREFIX"; then
     echo "Notice: Directory '$PREFIX' already exists. Subtree is already initialized."
@@ -44,15 +48,21 @@ if [ "$CURRENT_REBASE" = "true" ]; then
     git config pull.rebase merges
 fi
 
-# 6. Ensure git-subtree is available in environment
+# 6. Ensure git-subtree is available (kept in sync with configure-subtree.sh; inlined for curl | bash)
+BIN_DIR="$HOME/.local/bin"
 if ! git subtree --help >/dev/null 2>&1; then
-    for dir in /usr/lib/git-core /usr/libexec/git-core /usr/local/libexec/git-core; do
+    for dir in /usr/lib/git-core /usr/libexec/git-core /usr/local/libexec/git-core /usr/share/doc/git/contrib/subtree; do
         if [ -x "$dir/git-subtree" ]; then
-            export GIT_EXEC_PATH="$dir"
-            export PATH="$dir:$PATH"
+            mkdir -p "$BIN_DIR"
+            ln -sf "$dir/git-subtree" "$BIN_DIR/git-subtree"
+            echo "Notice: Linked git-subtree into $BIN_DIR."
             break
         fi
     done
+    case ":$PATH:" in
+        *":$BIN_DIR:"*) ;;
+        *) export PATH="$BIN_DIR:$PATH" ;;
+    esac
 fi
 
 if ! git subtree --help >/dev/null 2>&1; then
