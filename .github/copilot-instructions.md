@@ -1,6 +1,7 @@
 # Project Guidelines
 
 Read `.shared/ai/core/service-instructions.md`.
+Read `.shared/ai/core/common-instructions.md`.
 
 ## Repository Layout
 
@@ -36,9 +37,3 @@ Read `.shared/ai/core/service-instructions.md`.
 - Prefer well-established, maintained packages when a dependency is genuinely needed.
 - Add every new dependency to the appropriate section of `pyproject.toml` and install it in `.venv` before validating.
 - Avoid introducing a dependency for functionality that is small and clear to implement with the standard library.
-
-## Documentation
-
-- Keep `README.md` aligned with the install, usage, development, and publishing workflows.
-- Always run `npx markdownlint-cli2 --fix [filename].md` for markdown changes but do not address issues that are not fixable with this command without explicit permission.
-- Never modify `.markdownlint-cli2.jsonc`. Ask the user first if a change is necessary.
