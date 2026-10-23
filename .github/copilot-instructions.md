@@ -37,3 +37,4 @@ Read `.shared/ai/core/common-instructions.md`.
 - Prefer well-established, maintained packages when a dependency is genuinely needed.
 - Add every new dependency to the appropriate section of `pyproject.toml` and install it in `.venv` before validating.
 - Avoid introducing a dependency for functionality that is small and clear to implement with the standard library.
+
